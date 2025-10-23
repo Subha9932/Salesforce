@@ -1,0 +1,55 @@
+<template>
+    <div class="slds-box slds-box_x-small slds-theme_default">
+        <div class="slds-grid slds-grid_vertical slds-gutters">
+            <div class="slds-col">
+                <lightning-button 
+                    label="Generate Summary" 
+                    title="Generate AI Summary" 
+                    onclick={handleRefresh}
+                    disabled={loading}
+                    variant="brand"
+                    class="slds-m-bottom_small">
+                </lightning-button>
+            </div>
+            
+            <div class="slds-col">
+                <template if:true={loading}>
+                    <lightning-spinner alternative-text="Loading summary"></lightning-spinner>
+                </template>
+                
+                <template if:false={loading}>
+                    <template if:true={error}>
+                        <div class="slds-alert slds-alert_error" role="alert">
+                            <h2>Error: {error}</h2>
+                        </div>
+                    </template>
+                    
+                    <template if:true={hasSummary}>
+                        <div class="slds-box slds-box_xxx-small slds-theme_info">
+                            <h3 class="slds-text-heading_small">AI Summary</h3>
+                            <p class="slds-text-body_small">{summary}</p>
+                            
+                            <template if:true={model}>
+                                <div class="slds-text-body_caption slds-m-top_xx-small">
+                                    <strong>Model:</strong> {model}
+                                </div>
+                            </template>
+                            
+                            <template if:true={tokenUsage}>
+                                <div class="slds-text-body_caption slds-m-top_xx-small">
+                                    <strong>Tokens:</strong> {tokenUsage}
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    
+                    <template if:false={hasSummary}>
+                        <div class="slds-text-body_small slds-text-color_weak">
+                            No summary available yet. Click "Generate Summary" to create one.
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>
