@@ -1,0 +1,40 @@
+<template>
+    <div class="feedback-container slds-p-around_small">
+        <div class="stars" onmouseleave={handleMouseLeave} role="group" aria-label="Account rating">
+            <template for:each={stars} for:item="star">
+                <span
+                    key={star}
+                    class={getStarClass}
+                    data-value={star}
+                    onmouseover={handleMouseOver}
+                    onclick={handleClick}
+                    title={star}
+                    aria-label={star}
+                    role="button"
+                    tabindex="0"
+                    onkeydown={handleKeyDown}
+                >
+                    &#9733;
+                </span>
+            </template>
+        </div>
+
+        <template if:true={showComment}>
+            <div class="slds-m-top_small">
+                <label class="slds-form-element__label" for="comments">Comments (optional)</label>
+                <textarea id="comments" class="slds-textarea" placeholder="Add a comment..." oninput={handleCommentChange}>{comments}</textarea>
+            </div>
+        </template>
+
+        <div class="actions slds-m-top_small">
+            <lightning-button variant="brand" label="Submit Feedback" title="Submit Feedback" onclick={handleSubmit} disabled={submitDisabled}></lightning-button>
+        </div>
+
+        <template if:true={message}>
+            <div class="slds-m-top_small slds-text-color_success">{message}</div>
+        </template>
+        <template if:true={error}>
+            <div class="slds-m-top_small slds-text-color_error">{error}</div>
+        </template>
+    </div>
+</template>
